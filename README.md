@@ -1,7 +1,7 @@
 # React_Study_리액트 for Inflearn
 
 <div>
-  <h3>□ 리액트 - 기초부터 실전까</h3>
+  <h3>□ 리액트 - 기초부터 실전까지</h3>
   <br>
   <h3>□ 강의내용</h3>
   <ul>
