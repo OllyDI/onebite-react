@@ -1,6 +1,6 @@
 import './App.css';
 
-import Register from './components/Register'
+import HookExam from './components/HookExam'
 
 /*
   리액트의 컴포넌트는 첫 글자가 무조건 대문자로 작성해야 인식됨
@@ -17,7 +17,7 @@ function App() {
 
   return (
     <>
-    <Register />
+    <HookExam />
     </>
   )
 }
