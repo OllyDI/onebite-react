@@ -23,7 +23,7 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': 'off',    // 사용하지 않는 변수 오류
+      'no-unused-vars': 'off',
       'react/props-types': 'off'
     },
   },
