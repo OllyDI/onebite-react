@@ -1,10 +1,13 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import Home from './pages/Home'
 import New from './pages/New'
 import Diary from './pages/Diary'
 import Notfound from './pages/Notfound'
-import './App.css'
+import Button from './components/Button'
+import Header from './components/Header'
 
+import './App.css'
+import { getEmotionImage } from './util/get-emotion-image'
 
 /*
   구현 페이지
@@ -14,13 +17,23 @@ import './App.css'
 */
 function App() {
 
+  const nav = useNavigate();
+
+  const onClickButton = () => {
+    nav('/new');
+  }
+
   return (
     <>
+      <Header title={'header'} leftChild={<Button text={'Left'}/>} rightChild={<Button text={'right'}/>}/>
+      <Button text={111} onClick={() => {}}/>
+      <Button text={222} type={'POSITIVE'} onClick={() => {}}/>
+      <Button text={333} type={'NEGATIVE'} onClick={() => {}}/>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/new' element={<New />} />
-        <Route path='/diary' element={<Diary />} />
-        <Route path='*' element={<Notfound />}/>
+        <Route path='/diary/:id' element={<Diary />} />
+        <Route path='*' element={<Notfound />} />
       </Routes>
     </>
   )
