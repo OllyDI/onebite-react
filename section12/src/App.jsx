@@ -19,15 +19,21 @@ import './App.css'
 const mockData = [
   {
     id: 0,
-    date: new Date().getTime(),
+    createdDate: new Date('2025-10-30').getTime(),
     emotionId: 1,
     content: '1번 일기 내용',
   }, 
   {
     id: 1,
-    date: new Date().getTime(),
+    createdDate: new Date('2025-10-31').getTime(),
     emotionId: 2,
     content: '2번 일기 내용',
+  }, 
+  {
+    id: 3,
+    createdDate: new Date('2025-09-05').getTime(),
+    emotionId: 3,
+    content: '3번 일기 내용',
   }, 
 ]
 
@@ -43,13 +49,13 @@ function reducer(state, action) {
   }
 }
 
-const DiaryStateContext = createContext();
-const DiaryDispatchContext = createContext();
+export const DiaryStateContext = createContext();
+export const DiaryDispatchContext = createContext();
 
 function App() {
 
   const [data, dispatch] = useReducer(reducer, mockData);
-  const idRef = useRef(2);
+  const idRef = useRef(3);
 
   // 일기 추가
   const onCreate = (createdDate, emotionId, content) => {
@@ -85,9 +91,6 @@ function App() {
 
   return (
     <>
-      <button onClick={() => {onCreate(new Date().getTime(), 1, 'hello')}}>CREATE</button>
-      <button onClick={() => {onUpdate(1, new Date().getTime(), 3, '수정된 일기')}}>UPDATE</button>
-      <button onClick={() => {onDelete(1)}}>DELETE</button>
       <DiaryStateContext.Provider value={data}>
         <DiaryDispatchContext.Provider value={{onCreate, onUpdate, onDelete}}>
           <Routes>
