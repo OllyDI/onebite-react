@@ -1,51 +1,11 @@
 import EmotionItem from './EmotionItem'
 import Button from './Button'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-
-import dayjs from 'dayjs'
-import isLeapYear from 'dayjs/plugin/isLeapYear'
-import 'dayjs/locale/ko'
+import { emotionList } from '../util/constants'
+import { getStringedDate } from '../util/get-stringed-date'
 
 import './Editor.css'
-
-dayjs.extend(isLeapYear);
-dayjs.locale('ko');
-
-const emotionList = [
-    {
-        emotionId: 1,
-        emotionName: '완전좋음'
-    }, 
-    {
-        emotionId: 2,
-        emotionName: '좋음'
-    }, 
-    {
-        emotionId: 3,
-        emotionName: '그럭저럭'
-    }, 
-    {
-        emotionId: 4,
-        emotionName: '나쁨'
-    }, 
-    {
-        emotionId: 5,
-        emotionName: '끔찍함'
-    }, 
-]
-
-// const getStringedDate = (targetDate) => {
-//     let year = targetDate.getFullYear();
-//     let month = targetDate.getMonth() + 1;
-//     let date = targetDate.getDate();
-
-//     month = month < 10 ? `0${month}` : month
-//     date = date < 10 ? `0${date}` : date
-
-//     return `${year}-${month}-${date}`
-// }
-
 
 /* 
     Editor 페이지는 생성, 수정 페이지 두 곳에서 사용하기 때문에 
@@ -53,15 +13,26 @@ const emotionList = [
     수정시에 작성 완료 버튼을 누르면 문제가 발생
     -> 부모 컴포넌트에서 onSubmit 함수를 넘겨주어 생성인지 수정인지 구분
 */
-const Editor = ({onSubmit}) => {
+const Editor = ({initData, onSubmit}) => {
 
     const nav = useNavigate();
 
     const [input, setInput] = useState({
-        createdDate: dayjs(new Date()).format('YYYY-MM-DD'),
+        createdDate: new Date(),
         emotionId: 1,
         content: ''
     });
+
+    useEffect(() => {
+        if (initData) {
+            setInput({
+                ...initData, 
+                createdDate: getStringedDate(initData.createdDate)
+            });
+        }
+    }, [initData])
+
+    
     const onChangeInput = (e) => {
         let name = e.target.name
         let value = e.target.value
@@ -72,6 +43,13 @@ const Editor = ({onSubmit}) => {
         })
     }
     
+    const onClickChangedDate = () => {
+        setInput({
+            ...initData,
+            createdDate: getStringedDate(new Date())
+        })
+    }
+
     const onClickSubmitButton = () => {
         onSubmit(input);
     }
@@ -81,10 +59,12 @@ const Editor = ({onSubmit}) => {
             <section className='date_section'>
                 <h4>오늘의 날짜</h4>
                 <input 
-                    type='date' 
+                    type='datetime-local' 
                     name='createdDate'
                     onChange={onChangeInput}
-                    value={input.createdDate} />
+                    value={getStringedDate(input.createdDate)} 
+                />
+                <Button text={'현재 시간으로 변경'} type={'POSITIVE'} onClick={onClickChangedDate}/>
             </section>
 
             <section className='emotion_section'>
