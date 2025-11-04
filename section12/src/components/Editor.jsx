@@ -45,7 +45,7 @@ const Editor = ({initData, onSubmit}) => {
     
     const onClickChangedDate = () => {
         setInput({
-            ...initData,
+            ...input,
             createdDate: getStringedDate(new Date())
         })
     }
@@ -56,15 +56,18 @@ const Editor = ({initData, onSubmit}) => {
 
     return (
         <div className='Editor'>
+            
             <section className='date_section'>
                 <h4>오늘의 날짜</h4>
-                <input 
-                    type='datetime-local' 
-                    name='createdDate'
-                    onChange={onChangeInput}
-                    value={getStringedDate(input.createdDate)} 
-                />
-                <Button text={'현재 시간으로 변경'} type={'POSITIVE'} onClick={onClickChangedDate}/>
+                <div className='date_input'>
+                    <input 
+                        type='datetime-local' 
+                        name='createdDate'
+                        onChange={onChangeInput}
+                        value={getStringedDate(input.createdDate)} 
+                    />
+                    <Button text={'현재 시간으로 변경'} type={'POSITIVE'} onClick={onClickChangedDate}/>
+                </div>
             </section>
 
             <section className='emotion_section'>

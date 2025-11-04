@@ -12,7 +12,17 @@
     width: 100%;
 }
 
-.Editor > section > input, textarea {
+.Editor > section > textarea {
+    background-color: rgb(236, 236, 236);
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 10px 20px;
+    display: table-cell;
+    width: auto;
+    vertical-align: middle;
+}
+.Editor > section > .date_input > input {
     background-color: rgb(236, 236, 236);
     border: none;
     border-radius: 5px;
@@ -23,9 +33,20 @@
     vertical-align: middle;
 }
 
-.Editor .date_section > Button {
+
+.Editor > section .date_input {
+    display: flex;
+    justify-content: space-around;
+}
+
+.Editor > section > .date_input > input {
+    width: 100%;
+}
+
+.Editor .date_section > .date_input > Button {
     padding: 13px 20px;
     margin-left: 10px;
+    width: auto;
 }
 
 .Editor > section > textarea {
@@ -45,4 +66,5 @@
 .Editor .button_section {
     display: flex;
     justify-content: space-between;
+    
 }

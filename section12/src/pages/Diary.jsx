@@ -5,19 +5,19 @@ import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import useDiary from '../hooks/useDiary'
 import { getStringedDate } from '../util/get-stringed-date'
+import usePageTitle from '../hooks/usePageTitle'
 
 const Diary = () => {
 
     const params = useParams();
     const nav = useNavigate();
-    
+    usePageTitle(`${Number(params.id) + 1}번 일기`);
+
     const curDiaryItem = useDiary(params.id); 
     if (!curDiaryItem) {
         return <div>데이터 로딩중...</div>
     }
     const { createdDate, emotionId, content } = curDiaryItem;
-
-    console.log(getStringedDate(createdDate))
 
     return (
         <div>
