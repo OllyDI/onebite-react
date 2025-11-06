@@ -5,11 +5,20 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 
-app.get('/test', (req, res) => {
+app.post('/api/test', (req, res) => {
     res.send('test');
 })
 
-const PORT = 3000;
+app.post('/api/login', (req, res) => {
+    const id = req.body.id;
+    const pw = req.body.password;
+
+    console.log(id, pw);
+    
+    res.send('test');
+})
+
+const PORT = 15001;
 app.listen(PORT, () => {
-    console.log('server listening on port 3000');
+    console.log('server listening on port 15001');
 })

@@ -1,6 +1,7 @@
 import { useReducer, useRef, createContext, useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
+import Users from './pages/Users'
 import Home from './pages/Home'
 import New from './pages/New'
 import Diary from './pages/Diary'
@@ -124,6 +125,7 @@ function App() {
         <DiaryDispatchContext.Provider value={{onCreate, onUpdate, onDelete}}>
           <Routes>
             <Route path='/' element={<Home />} />
+            <Route path='/users' element={<Users />} />
             <Route path='/new' element={<New />} />
             <Route path='/diary/:id' element={<Diary />} />
             <Route path='/Edit/:id' element={<Edit />} />

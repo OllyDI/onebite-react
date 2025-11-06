@@ -35,7 +35,7 @@
 
 
 .Editor > section .date_input {
-    display: flex;
+    display: flex;  
     justify-content: space-around;
 }
 
