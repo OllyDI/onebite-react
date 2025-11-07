@@ -17,6 +17,7 @@ const UserLogin = () => {
             url: 'http://ollyc.iptime.org:15001/api/login',
             method: 'post',
             data: userInfo,
+            withCredentials: true,
         }).then((api) => {
             console.log(api.data);
         }).catch((err) => {

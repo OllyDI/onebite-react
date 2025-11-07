@@ -8,16 +8,16 @@ const Users = () => {
 
     const [data, setData] = useState('null');
 
-    useEffect(() => {
-        axios({
-            url: 'http://ollyc.iptime.org:15001/api/test',
-            method: 'post',
-        }).then((api) => {
-            setData(api.data);
-        }).catch((err) => {
-            console.log('test error');
-        })
-    }, [])
+    // useEffect(() => {
+    //     axios({
+    //         url: 'http://ollyc.iptime.org:15001/api/test',
+    //         method: 'post',
+    //     }).then((api) => {
+    //         setData(api.data);
+    //     }).catch((err) => {
+    //         console.log('test error');
+    //     })
+    // }, [])
 
     return (
         <div>
