@@ -24,6 +24,14 @@
   </ul>
 </div>
 <div>
+</div>
+<h3>□ 복습 및 연습</h3>
+<ul>
+  <li>로그인 및 회원가입 구현</li>
+  <li>Node.js 서버와 연동</li>
+  <li>MySQL과 연동</li>
+</ul>
+<div>
   <h3>□ 감정 일기장 프로젝트</h3>
   <ul>
     <li>
