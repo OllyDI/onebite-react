@@ -1,7 +1,9 @@
 import { useReducer, useRef, createContext, useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
-import Users from './pages/Users'
+import ProtectedRoute from './util/ProtectedRoute'
+import Login from './pages/Login'
+import Register from './pages/Register'
 import Home from './pages/Home'
 import New from './pages/New'
 import Diary from './pages/Diary'
@@ -54,6 +56,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [data, dispatch] = useReducer(reducer, []);
   const idRef = useRef(0);
+
 
   useEffect(() => {
     const storedData = localStorage.getItem('diary');
@@ -116,7 +119,7 @@ function App() {
   }
 
   if (isLoading) {
-    return <div>데이 로딩중입니다...</div>
+    return <div>데이터 로딩중입니다...</div>
   }
 
   return (
@@ -124,11 +127,13 @@ function App() {
       <DiaryStateContext.Provider value={data}>
         <DiaryDispatchContext.Provider value={{onCreate, onUpdate, onDelete}}>
           <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/users' element={<Users />} />
-            <Route path='/new' element={<New />} />
-            <Route path='/diary/:id' element={<Diary />} />
-            <Route path='/Edit/:id' element={<Edit />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/Register' element={<Register />} />
+
+            <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
+            <Route path='/new' element={<ProtectedRoute><New /></ProtectedRoute>} />
+            <Route path='/diary/:id' element={<ProtectedRoute><Diary /></ProtectedRoute>} />
+            <Route path='/Edit/:id' element={<ProtectedRoute><Edit /></ProtectedRoute>} />
             <Route path='*' element={<Notfound />} />
           </Routes>
         </DiaryDispatchContext.Provider>

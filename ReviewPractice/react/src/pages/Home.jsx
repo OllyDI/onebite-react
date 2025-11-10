@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { DiaryStateContext } from '../App'
 
 import Header from '../components/Header'
@@ -17,7 +17,14 @@ const Home = () => {
     const data = useContext(DiaryStateContext);
     const [pivotDate, setPrivotDate] = useState(new Date());
     const monthlyData = getMonthlyData(pivotDate, data);
+    const [user, setUser] = useState();
     usePageTitle('감정 일기장');
+
+    // useEffect(() => {
+    //     api.get('/api/me')
+    //     .then(res => setUser(res.data.user))
+    //     .catch();
+    // }, [])
 
     const onIncreaseMonth = () => {
         setPrivotDate(new Date(pivotDate.getFullYear(), pivotDate.getMonth() + 1));
