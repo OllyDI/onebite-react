@@ -4,7 +4,7 @@ import { DiaryStateContext } from "../App";
 
 const useDiary = (id) => {
     
-    const data = useContext(DiaryStateContext);
+    const {data} = useContext(DiaryStateContext);
     const [curDiaryItem, setCurDiaryItem] = useState();
     const nav = useNavigate();
 

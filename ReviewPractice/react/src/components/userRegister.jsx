@@ -42,8 +42,8 @@ const UserRegister = () => {
                 <input type="name" name='name' onChange={onChangeUser} placeholder="이름"/>
                 <Button text={'회원가입'} type={'POSITIVE'}/>
             </div>
-            <div className="user_reg" onClick={() => nav('/login')}>
-                <p>로그인</p>
+            <div className="user_reg">
+                <p onClick={() => nav('/login')}>로그인</p>
             </div>
         </form>
     )

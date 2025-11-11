@@ -1,6 +1,6 @@
 import { useReducer, useRef, createContext, useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
-
+import { api } from './util/api'
 import ProtectedRoute from './util/ProtectedRoute'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -55,10 +55,15 @@ function App() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [data, dispatch] = useReducer(reducer, []);
+  const [user, setUser] = useState();
   const idRef = useRef(0);
 
 
   useEffect(() => {
+    api.get('/api/me')
+    .then(res => setUser(res.data.user))
+    .catch(() => {});
+
     const storedData = localStorage.getItem('diary');
     if (!storedData) { 
       setIsLoading(false);
@@ -118,13 +123,15 @@ function App() {
     })
   }
 
-  if (isLoading) {
+  if (isLoading || !user) {
     return <div>데이터 로딩중입니다...</div>
   }
 
+  console.log(user);
+
   return (
     <>
-      <DiaryStateContext.Provider value={data}>
+      <DiaryStateContext.Provider value={{data, user}}>
         <DiaryDispatchContext.Provider value={{onCreate, onUpdate, onDelete}}>
           <Routes>
             <Route path='/login' element={<Login />} />

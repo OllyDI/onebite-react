@@ -39,8 +39,8 @@ const UserLogin = () => {
                 <input type="password" name='pw' onChange={onChangeUser} placeholder="패스워드"/>
                 <Button text={'로그인'} type={'POSITIVE'}/>
             </div>
-            <div className="user_reg" onClick={() => {nav('/register')}}>
-                <p>회원가입</p>
+            <div className="user_reg">
+                <p onClick={() => {nav('/register')}}>회원가입</p>
             </div>
         </form>
 

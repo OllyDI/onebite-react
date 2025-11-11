@@ -118,7 +118,7 @@ const authMiddleware = (req, res, next) => {
 app.get('/api/me', authMiddleware, async (req, res) => {
     const user = await User.findOne({
         where: { id: req.userId },
-        attributes: ['id', 'name', 'created_at']
+        attributes: ['name', 'created_at']
     });
 
     res.json({ user });
