@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('./db.js');
 
 const UserTable = sequelize.define('User', {
-    pk: {
+    user_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -15,7 +15,7 @@ const UserTable = sequelize.define('User', {
     pw: {
         type: DataTypes.STRING(256),
         allowNull: false
-    },
+    },  
     name: {
         type: DataTypes.STRING(128),
         allowNull: false

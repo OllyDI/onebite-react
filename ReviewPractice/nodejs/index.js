@@ -10,6 +10,7 @@ const GitHubStrategy = require('passport-github2').Strategy;
 require("dotenv").config({ path: "init/init.env" })
 
 const User = require('./db/db_user.js');
+const Diary = require('./db/db_diary.js');
 const isProd = process.env.NODE_ENV === 'production';
 
 
@@ -118,7 +119,7 @@ const authMiddleware = (req, res, next) => {
 app.get('/api/me', authMiddleware, async (req, res) => {
     const user = await User.findOne({
         where: { id: req.userId },
-        attributes: ['name', 'created_at']
+        attributes: ['user_id', 'name', 'created_at']
     });
 
     res.json({ user });
@@ -126,7 +127,6 @@ app.get('/api/me', authMiddleware, async (req, res) => {
 
 // JWT refresh
 app.post('/api/refresh', async (req, res) => {
-    console.log('refresh', req.cookies.refresh_token)
     const token = req.cookies.refresh_token;
     if (!token) {
         return res.status(401).json({ message: '리프레시 토큰 없습니다.' })
@@ -172,6 +172,61 @@ app.post('/api/logout', async (req, res) => {
     res.clearCookie('refresh_token', { httpOnly:true, sameSite: isProd ? 'none' : 'lax'})
     res.json({ message: '로그아웃 성공' });
 })
+
+
+app.post('/api/diary', async (req, res) => {
+    const id = req.body.id;
+    try {
+        const diaries = await Diary.findAll({
+            where: { user_id: id }
+        })
+        res.status(200).json({diaries});
+    } catch (err) {
+        console.error('diary table load error', err);
+        res.status(500).json({ message: '데이터를 불러오지 못했습니다.' });
+    }   
+})
+
+app.post('/api/create_diary', async (req, res) => {
+    const diary = req.body;
+
+    try {
+        await Diary.create(diary);
+        res.status(200).json({ message: '저장이 완료되었습니다.' })
+    } catch (err) {
+        console.error('diary create error', err);
+        res.status(500).json({ message: '데이터 저장에 실패했습니다. '})
+    }
+})
+
+app.post('/api/update_diary', async (req, res) => {
+    const diary = req.body;
+    const {id} = req.body;
+
+    try {
+        await Diary.update(diary, { 
+            where: { id: id } 
+        });
+        res.status(200).json({ message: '업데이트가 완료되었습니다.' })
+    } catch (err) {
+        console.error('diary create error', err);
+        res.status(500).json({ message: '데이터 업데이트에 실패했습니다. '})
+    }
+})
+
+app.post('/api/delete_diary', async (req, res) => {
+    const id = req.body.id;
+    try {
+        await Diary.destroy({ 
+            where: { id: id } 
+        });
+        res.status(200).json({ message: '삭제가 완료되었습니다.' })
+    } catch (err) {
+        console.error('diary create error', err);
+        res.status(500).json({ message: '데이터 삭제에 실패했습니다. '})
+    }
+})
+
 
 const PORT = 15001;
 app.listen(PORT, () => {

@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createContext, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import { api } from './api';
 
 export default function ProtectedRoute({ children }) {
     const [ok, setOk] = useState(null);
-
+    const { setUser } = useContext(createContext());
     useEffect(() => {
     api.get('/api/me', { withCredentials: true })
         .then(() => setOk(true))

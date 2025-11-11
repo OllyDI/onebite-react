@@ -1,9 +1,10 @@
 import EmotionItem from './EmotionItem'
 import Button from './Button'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { emotionList } from '../util/constants'
 import { getStringedDate } from '../util/get-stringed-date'
+import { DiaryStateContext } from '../App'
 
 import './Editor.css'
 
@@ -16,11 +17,12 @@ import './Editor.css'
 const Editor = ({initData, onSubmit}) => {
 
     const nav = useNavigate();
-
+    const { user } = useContext(DiaryStateContext);
     const [input, setInput] = useState({
         createdDate: new Date(),
         emotionId: 1,
-        content: ''
+        content: '',
+        user_id: user.user_id
     });
 
     useEffect(() => {

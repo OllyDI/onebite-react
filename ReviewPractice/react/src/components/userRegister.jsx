@@ -29,7 +29,6 @@ const UserRegister = () => {
             alert(res.data.message);
             nav('/login');
         } catch (err) {
-            console.log(err);
             alert(err.response?.data?.message || '회원가입 실패');
         }
     }
