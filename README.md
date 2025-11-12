@@ -73,7 +73,7 @@
       <img width="1251" height="537" alt="Image" src="https://github.com/user-attachments/assets/44245718-faba-49b2-b377-66ad9045f576" />
     </li>
     <li>
-      <h4>서버 연결 및 DB연결 테스트 (회원가입 시 입력한 닉네임 가시화)</h4>
+      <h4>서버 연결 및 DB연결 테스트 (회원가입 시 입력한 닉네임 가시화 및 MySQL Diary데이터 불러오기)</h4>
       <img width="651" height="559" alt="Image" src="https://github.com/user-attachments/assets/79e1738a-446b-4c5d-913d-247db7474271" />
     </li>
   </ul>
