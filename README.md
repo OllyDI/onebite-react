@@ -60,3 +60,21 @@
     </li>
   </ul>
 </div>
+<br/>
+<div>
+  <h3>□ 감정 일기장 프로젝트 - 복습 및 연습</h3>
+  <ul>
+    <li>
+      <h4>DB 설계</h4>
+      <img width="704" height="246" alt="Image" src="https://github.com/user-attachments/assets/f8cd7123-2450-4854-80b5-1f7b4a5ac9a0" />
+    </li>
+    <li>
+      <h4>로그인 및 회원가입</h4>
+      <img width="1251" height="537" alt="Image" src="https://github.com/user-attachments/assets/44245718-faba-49b2-b377-66ad9045f576" />
+    </li>
+    <li>
+      <h4>서버 연결 및 DB연결 테스트 (회원가입 시 입력한 닉네임 가시화)</h4>
+      <img width="651" height="559" alt="Image" src="https://github.com/user-attachments/assets/79e1738a-446b-4c5d-913d-247db7474271" />
+    </li>
+  </ul>
+</div>
