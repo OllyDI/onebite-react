@@ -70,7 +70,7 @@ app.post('/api/register', async (req, res) => {
 
     const hashed = await bcrypt.hash(pw, 10);
     await User.create({ id, pw: hashed, name });
-    res.status(201).json({ message: '회원가입 완료' });
+    res.status(201).json({ message: '회원가입이 완료되었습니다.' });
 })
 
 
@@ -80,14 +80,14 @@ app.post('/api/login', async (req, res) => {
     const {id, pw} = req.body;
 
     if (!id || !pw) {
-        return res.status(400).json({ message: '아이디 또는 비밀번호 확인' });
+        return res.status(400).json({ message: '아이디 또는 비밀번호 확인을 확인하세요.' });
     }
 
     const user = await User.findOne({ where: {id} });
-    if (!user) return res.status(401).json({ message: '유저 없음' });
+    if (!user) return res.status(401).json({ message: '아이디가 존재하지 않습니다.' });
 
     const ok = await bcrypt.compare(pw, user.pw);
-    if (!ok) return res.status(401).json({ message: '비밀번호 불일치' });
+    if (!ok) return res.status(401).json({ message: '비밀번호 불일치합니다.' });
 
     const accessToken = createAccessJWT(user);
     const refreshToken = createRefreshJWT(user);
@@ -104,7 +104,7 @@ app.post('/api/login', async (req, res) => {
 const authMiddleware = (req, res, next) => {
     const token = req.cookies.access_token; 
     if (!token) {
-        return res.status(401).json({ message: '토큰 없음' });
+        return res.status(401).json({ message: '토큰이 존재하지 않습니다.' });
     }
 
     try {

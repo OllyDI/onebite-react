@@ -1,6 +1,7 @@
 import { useReducer, useRef, createContext, useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { api } from './util/api'
+import { UserContext } from './util/UserContext'
 import ProtectedRoute from './util/ProtectedRoute'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -56,42 +57,39 @@ export const DiaryDispatchContext = createContext();
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [data, dispatch] = useReducer(reducer, []);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   const idRef = useRef(0);
 
 
   useEffect(() => {
+    if (!user) {
+      setIsLoading(false);
+      return
+    } 
     const init = async () => {
       try {
-        const res = await api.get('/api/me', { withCredentials: true })
-        setUser(res.data.user);
-        try {
-          const diaries = await api.post('/api/diary', {id: res.data.user.user_id}, { withCredentials: true });
-          const tmpDiaries = diaries.data.diaries;
-          let maxId = 0;
+        const diaries = await api.post('/api/diary', {id: user.user_id}, { withCredentials: true });
+        const tmpDiaries = diaries.data.diaries;
+        let maxId = 0;
 
-          tmpDiaries.forEach((item) => {
-            if (Number(item.id) > maxId) { maxId = Number(item.id) }
-            item.createdDate = new Date(item.createdDate).getTime();
-          })
-          idRef.current = maxId + 1;
+        tmpDiaries.forEach((item) => {
+          if (Number(item.id) > maxId) { maxId = Number(item.id) }
+          item.createdDate = new Date(item.createdDate).getTime();
+        })
+        idRef.current = maxId + 1;
 
-          dispatch({
-            type: 'INIT',
-            data: tmpDiaries
-          })
-          setIsLoading(false);
-        } catch (err) {
-          setIsLoading(false);
-          return
-        }
+        dispatch({
+          type: 'INIT',
+          data: tmpDiaries
+        })
+        setIsLoading(false);
       } catch (err) {
         setIsLoading(false);
         return
       }
     }
     init();
-  }, [])
+  }, [user])
 
   // 일기 추가
   const onCreate = (createdDate, emotionId, content, user_id) => {
@@ -132,20 +130,22 @@ function App() {
   }
   return (
     <>
-      <DiaryStateContext.Provider value={{data, user}}>
-        <DiaryDispatchContext.Provider value={{onCreate, onUpdate, onDelete}}>
-          <Routes>
-            <Route path='/login' element={<Login />} />
-            <Route path='/Register' element={<Register />} />
+      <UserContext.Provider value={{ user, setUser }}>
+        <DiaryStateContext.Provider value={{data}}>
+          <DiaryDispatchContext.Provider value={{onCreate, onUpdate, onDelete}}>
+            <Routes>
+              <Route path='/login' element={<Login />} />
+              <Route path='/Register' element={<Register />} />
 
-            <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
-            <Route path='/new' element={<ProtectedRoute><New /></ProtectedRoute>} />
-            <Route path='/diary/:id' element={<ProtectedRoute><Diary /></ProtectedRoute>} />
-            <Route path='/Edit/:id' element={<ProtectedRoute><Edit /></ProtectedRoute>} />
-            <Route path='*' element={<Notfound />} />
-          </Routes>
-        </DiaryDispatchContext.Provider>
-      </DiaryStateContext.Provider>
+              <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
+              <Route path='/new' element={<ProtectedRoute><New /></ProtectedRoute>} />
+              <Route path='/diary/:id' element={<ProtectedRoute><Diary /></ProtectedRoute>} />
+              <Route path='/Edit/:id' element={<ProtectedRoute><Edit /></ProtectedRoute>} />
+              <Route path='*' element={<Notfound />} />
+            </Routes>
+          </DiaryDispatchContext.Provider>
+        </DiaryStateContext.Provider>
+      </UserContext.Provider>
     </>
   )
 }
