@@ -46,14 +46,13 @@ const sendJWTCookies = (res, access, refresh) => {
 }
 
 
-
 app.use(cors({
     origin: [process.env.CLIENT_URL, process.env.CLIENT_URL_LOCAL],
     credentials: true,
 }));
-
 app.use(express.json());
 app.use(cookieParser());
+
 
 // local register
 app.post('/api/register', async (req, res) => {
@@ -72,7 +71,6 @@ app.post('/api/register', async (req, res) => {
     await User.create({ id, pw: hashed, name });
     res.status(201).json({ message: '회원가입이 완료되었습니다.' });
 })
-
 
 
 // local login
@@ -116,6 +114,8 @@ const authMiddleware = (req, res, next) => {
     }
 }
 
+
+// 로그인 정보 가져오기
 app.get('/api/me', authMiddleware, async (req, res) => {
     const user = await User.findOne({
         where: { id: req.userId },
@@ -124,6 +124,7 @@ app.get('/api/me', authMiddleware, async (req, res) => {
 
     res.json({ user });
 })
+
 
 // JWT refresh
 app.post('/api/refresh', async (req, res) => {
@@ -153,6 +154,8 @@ app.post('/api/refresh', async (req, res) => {
     }
 })
 
+
+// 로그아웃
 app.post('/api/logout', async (req, res) => {
     const token = req.cookies.refresh_token;
     if (token) {
@@ -174,6 +177,7 @@ app.post('/api/logout', async (req, res) => {
 })
 
 
+// 회원 다이어리 가져오기
 app.post('/api/diary', async (req, res) => {
     const id = req.body.id;
     try {
@@ -187,6 +191,8 @@ app.post('/api/diary', async (req, res) => {
     }   
 })
 
+
+// 다이어리 생성
 app.post('/api/create_diary', async (req, res) => {
     const diary = req.body;
 
@@ -199,6 +205,8 @@ app.post('/api/create_diary', async (req, res) => {
     }
 })
 
+
+// 다이어리 수정
 app.post('/api/update_diary', async (req, res) => {
     const diary = req.body;
     const {id} = req.body;
@@ -214,6 +222,8 @@ app.post('/api/update_diary', async (req, res) => {
     }
 })
 
+
+// 다이어리 삭제
 app.post('/api/delete_diary', async (req, res) => {
     const id = req.body.id;
     try {

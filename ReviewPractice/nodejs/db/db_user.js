@@ -28,12 +28,6 @@ const UserTable = sequelize.define('User', {
 }, {
     tableName: 'users',
     timestamps: true,
-    // createdAt: 'created_at',
-    // updatedAt: 'updated_at',
-    // define: {
-    //     // createdAt, updatedAt을 null 허용
-    //     timestamps: true,
-    // },
     underscored: true,
     freezeTableName: true,
 })
