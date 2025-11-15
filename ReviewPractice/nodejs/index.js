@@ -85,7 +85,7 @@ app.post('/api/login', async (req, res) => {
     if (!user) return res.status(401).json({ message: '아이디가 존재하지 않습니다.' });
 
     const ok = await bcrypt.compare(pw, user.pw);
-    if (!ok) return res.status(401).json({ message: '비밀번호 불일치합니다.' });
+    if (!ok) return res.status(401).json({ message: '비밀번호가 불일치합니다.' });
 
     const accessToken = createAccessJWT(user);
     const refreshToken = createRefreshJWT(user);
@@ -130,7 +130,7 @@ app.get('/api/me', authMiddleware, async (req, res) => {
 app.post('/api/refresh', async (req, res) => {
     const token = req.cookies.refresh_token;
     if (!token) {
-        return res.status(401).json({ message: '리프레시 토큰 없습니다.' })
+        return res.status(401).json({ message: '리프레시 토큰이 없습니다.' })
     }
 
     try {
